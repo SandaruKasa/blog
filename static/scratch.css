@@ -1,0 +1,58 @@
+:root {
+    /* Stolen from the white text guy. His taste is exquisite. */
+    --black: #000000;
+    --dark-green: #082A00;
+    --mid-green: #0E4603;
+    --bright-green: #2CFF4B;
+    --white: #FFFFFF;
+
+    --text-0: var(--white);
+    --text-1: var(--black);
+    --primary-color: var(--bright-green);
+
+    /* TODO: find where these are used and replace them appropriately */
+    --bg-0: yellow;
+    --bg-1: cyan;
+    --bg-2: magenta;
+
+    /* TODO: code background */
+
+    --header-font: "Courier New";
+}
+
+html,
+body {
+    box-sizing: border-box;
+}
+
+html {
+    background-color: var(--black);
+    padding: 8px 0px;
+    height: 100%;
+}
+
+body {
+    background-color: var(--dark-green);
+
+    min-width: 10rem;
+    max-width: 70rem;
+    min-height: 100%;
+
+    margin: auto;
+
+    padding: 24px 0px;
+}
+
+.content {
+    background-color: var(--mid-green);
+    padding-bottom: 24px;
+}
+
+.page-header {
+    margin-top: 1rem;
+}
+
+.meta,
+time {
+    color: var(--bright-green);
+}

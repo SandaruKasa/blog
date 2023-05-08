@@ -1,0 +1,7 @@
+[submodule "themes/atelier_syntax_highlighting"]
+	path = themes/atelier_syntax_highlighting
+	url = https://github.com/atelierbram/syntax-highlighting.git
+    branch = archive
+[submodule "themes/apollo"]
+	path = themes/apollo
+	url = https://github.com/not-matthias/apollo.git
