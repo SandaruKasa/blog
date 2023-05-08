@@ -4,5 +4,5 @@ WORKDIR /app
 COPY . . 
 RUN zola build
 
-FROM dshadow/static-http-server as blog
-COPY --from=zola /app/public/ /www
+FROM fasthttpd/fasthttpd as blog
+COPY --from=zola /app/public/ /usr/share/fasthttpd/html/
