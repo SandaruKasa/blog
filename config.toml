@@ -2,6 +2,7 @@
 
 base_url = "https://example.com"
 title = "It is what it is"
+minify_html = true
 
 theme = "apollo"
 
@@ -39,13 +40,6 @@ toc = true
 
 theme = "dark"
 stylesheets = ["scratch.css"]
-
-[[extra.meta]]
-property = "og:title"
-content = "the og title"
-[[extra.meta]]
-property = "og:description"
-content = "the og description"
 
 [[extra.socials]]
 name = "Link1"
