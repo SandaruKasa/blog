@@ -1,7 +1,5 @@
-# TODO: fill in actual data
-
-base_url = "https://example.com"
-title = "It is what it is"
+base_url = "http://sklad.observer"
+title = "SKлад постов"
 minify_html = true
 
 theme = "apollo"
@@ -42,8 +40,8 @@ theme = "dark"
 stylesheets = ["scratch.css"]
 
 [[extra.socials]]
-name = "Link1"
-url = "https://example.com"
+name = "GitHUb"
+url = "https://github.com/SandaruKasa"
 icon = "github"
 
 
