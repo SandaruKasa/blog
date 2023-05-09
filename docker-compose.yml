@@ -3,14 +3,29 @@ services:
   blog:
     build: blog
     restart: always
+
   caddy:
     image: caddy
     ports:
-      - "8000:80"
-      - "8443:443"
-      - "8443:443/udp"
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
     restart: always
+    # TODO: check if this is the optimal way
     user: "1000:1000"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./caddy_data:/data:rw
+
+  gitea:
+    image: gitea/gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    ports:
+      - "3222:22"
+    restart: always
+    volumes:
+      - ./gitea_data:/data:rw
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro

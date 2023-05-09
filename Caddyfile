@@ -5,3 +5,7 @@ blog.sklad.observer, www.sklad.observer {
 sklad.observer {
 	reverse_proxy http://blog:80
 }
+
+gitea.sklad.observer {
+	reverse_proxy http://gitea:3000
+}

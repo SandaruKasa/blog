@@ -1,0 +1,8 @@
+*
+!/.gitignore
+
+!/gitea
+/gitea/*
+!/gitea/conf/
+/gitea/conf/*
+!/gitea/conf/app.ini
