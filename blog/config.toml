@@ -36,6 +36,7 @@ include_content = true
 [extra] # https://www.getzola.org/themes/apollo/
 toc = true
 
+favicon = "/crises.png"
 theme = "dark"
 stylesheets = ["scratch.css"]
 
