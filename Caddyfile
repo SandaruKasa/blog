@@ -1,0 +1,7 @@
+blog.sklad.observer, www.sklad.observer {
+	redir sklad.observer
+}
+
+sklad.observer {
+	reverse_proxy http://blog:80
+}

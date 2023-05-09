@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  blog:
+    build: blog
+    restart: always
+  caddy:
+    image: caddy
+    ports:
+      - "8000:80"
+      - "8443:443"
+      - "8443:443/udp"
+    restart: always
+    user: "1000:1000"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy_data:/data:rw
