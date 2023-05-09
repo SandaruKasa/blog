@@ -1,9 +1,11 @@
 blog.sklad.observer, www.sklad.observer {
 	redir https://sklad.observer{uri}
+	log
 }
 
 sklad.observer {
 	reverse_proxy http://blog:80
+	log
 }
 
 gitea.sklad.observer {
