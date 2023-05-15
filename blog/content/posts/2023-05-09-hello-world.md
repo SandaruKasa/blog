@@ -1,6 +1,7 @@
 +++
 title = "Hello, world!"
 date = "2023-05-09"
+updated = "2023-05-15"
 description = "This site now exists"
 
 [extra]
@@ -58,7 +59,7 @@ Not much to say here.
 The theme I've used is [apollo](https://www.getzola.org/themes/apollo/).
 And no, it is not responsible for the awful color palette you're seeing.
 
-The static content is than served with [FastHttpd](https://fasthttpd.org/) & proxied through vaddy.
+The static content is than served with [FastHttpd](https://fasthttpd.org/) & proxied through Caddy.
 But I guess I can just move the static files into the Caddy container.
 
 Speaking of which,
@@ -72,14 +73,15 @@ but damn is it versatile.
 
 Subdomain routing? Piece of cake. Just
 ```caddy
-blog.sklad.observer, www.sklad.observer {
-	redir https://sklad.observer{uri}
+sklad.observer, www.sklad.observer {
+	redir https://blog.sklad.observer{uri}
+	log
 }
 ```
 
 A reverse proxy?
 ```caddy
-sklad.observer {
+blog.sklad.observer {
 	reverse_proxy http://SOME_ADDRESS:80
 }
 ```

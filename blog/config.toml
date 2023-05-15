@@ -1,4 +1,4 @@
-base_url = "https://sklad.observer"
+base_url = "https://blog.sklad.observer"
 title = "SKлад постов"
 minify_html = true
 

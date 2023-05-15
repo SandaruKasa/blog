@@ -1,9 +1,9 @@
-blog.sklad.observer, www.sklad.observer {
-	redir https://sklad.observer{uri}
+sklad.observer, www.sklad.observer {
+	redir https://blog.sklad.observer{uri}
 	log
 }
 
-sklad.observer {
+blog.sklad.observer {
 	reverse_proxy http://blog:80
 	log
 }
