@@ -1,6 +1,15 @@
-base_url = "https://blog.sklad.observer"
+# Zola loves caluclating absolute links (even for #anchors within a page),
+# but since "/some/url" resolves from the root of the domain,
+# this would ruin Zola-generated sites that don't start at the root of a domain.
+# I.e. having a url pointing to "/post-1" at "https://example.com/blog/"
+# resolves to "https://example.com/post-1" and not "https://example.com/blog/post-1".
+# That's why Zola prepends this `base_url` to all absolute links.
+# But since I have an entire subdomain, I can just set this to "/",
+# which has an additional benifit of not requiring me to change this param
+# every time I want to launch it without https or on localhost.
+base_url = "/"
 title = "SKлад постов"
-minify_html = true
+minify_html = false
 
 theme = "apollo"
 
