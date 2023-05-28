@@ -43,6 +43,7 @@ include_content = true
 
 
 [extra] # https://www.getzola.org/themes/apollo/
+# Table of contents
 toc = true
 
 favicon = "/crises.png"
@@ -62,9 +63,3 @@ url = "/posts"
 [[extra.menu]]
 name = "About"
 url = "/about"
-
-
-# TODO: add footer
-# TODO: copy link by clicking on header
-# TODO: tags
-# TODO: search?
