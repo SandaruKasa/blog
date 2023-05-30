@@ -6,6 +6,7 @@
 
 ## Blog is static. Maybe just link a volume to Caddy somehow?
 
+## Fix 404 page for blog
 
 
 # Blog
@@ -36,7 +37,7 @@
 #### ensure clickable
 #### tag old posts
 
-### RSS
+### Leave a link to RSS
 
 ### Search through the blog?
 

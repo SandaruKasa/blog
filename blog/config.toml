@@ -14,7 +14,8 @@ minify_html = false
 theme = "apollo"
 
 compile_sass = false
-build_search_index = true
+build_search_index = false
+generate_feed = true
 
 [[taxonomies]]
 name = "tags"
