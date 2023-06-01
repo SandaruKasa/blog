@@ -4,10 +4,24 @@ sklad.observer, www.sklad.observer {
 }
 
 blog.sklad.observer {
-	reverse_proxy http://blog:80
+	root * /var/blog
+	file_server
+	handle_errors {
+		# If a custom error page exists, use it.
+		try_files * /{err.status_code}.html
+		# Serve static content, just as normal.
+		# Still have to explicitly state this, otherwsie Caddy spits out empty body.
+		file_server
+	}
 	log
 }
 
 gitea.sklad.observer {
 	reverse_proxy http://gitea:3000
+}
+
+# Unknown domain requested.
+http:// {
+	error 421
+	log
 }

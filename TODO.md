@@ -4,10 +4,6 @@
 
 ## LICENSE?
 
-## Blog is static. Maybe just link a volume to Caddy somehow?
-
-## Fix 404 page for blog
-
 
 # Blog
 

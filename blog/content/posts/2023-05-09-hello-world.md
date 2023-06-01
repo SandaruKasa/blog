@@ -1,7 +1,7 @@
 +++
 title = "Hello, world!"
 date = "2023-05-09"
-updated = "2023-05-15"
+updated = "2023-06-01"
 description = "This site now exists"
 
 [extra]
@@ -81,7 +81,7 @@ sklad.observer, www.sklad.observer {
 
 A reverse proxy?
 ```caddy
-blog.sklad.observer {
+gitea.sklad.observer {
 	reverse_proxy http://SOME_ADDRESS:80
 }
 ```
@@ -148,3 +148,7 @@ It's mostly just configs and assets, but whatever.
 
 + [GitHub](https://github.com/SandaruKasa/sklad.observer)
 + [Gitea](https://gitea.sklad.observer/SandaruKasa/SKlad)
+
+# UPD
+I've got rid of fasthttpd, because Caddy can serve static files too.
+That's one less (fewer?) golang dependency.

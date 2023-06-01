@@ -2,30 +2,43 @@ version: "3.8"
 services:
   blog:
     build: blog
-    restart: always
+    restart: "no"
+    volumes:
+      - blog:/run/public:rw
 
   caddy:
     image: caddy
+    depends_on:
+      blog:
+        condition: service_completed_successfully
+    restart: always
+
     ports:
       - "80:80"
       - "443:443"
       - "443:443/udp"
-    restart: always
+
     # TODO: check if this is the optimal way
     user: "1000:1000"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./caddy_data:/data:rw
+      - blog:/var/blog:ro
 
   gitea:
     image: gitea/gitea
+    restart: always
+
+    ports:
+      - "3222:22"
+
     environment:
       - USER_UID=1000
       - USER_GID=1000
-    ports:
-      - "3222:22"
-    restart: always
     volumes:
       - ./gitea_data:/data:rw
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  blog:
