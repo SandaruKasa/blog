@@ -4,7 +4,7 @@ sklad.observer, www.sklad.observer {
 }
 
 blog.sklad.observer {
-	root * /var/blog
+	root * /srv/blog
 	file_server
 	handle_errors {
 		# If a custom error page exists, use it.

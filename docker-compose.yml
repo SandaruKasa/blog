@@ -1,10 +1,22 @@
 version: "3.8"
 services:
   blog:
-    build: blog
+    build:
+      context: "blog"
+      dockerfile: "zola.dockerfile"
+    command:
+      [
+        "--root",
+        "/usr/src/blog",
+        "build",
+        "--output-dir",
+        "/srv/blog",
+        "--force"
+      ]
     restart: "no"
     volumes:
-      - blog:/run/public:rw
+      - ./blog:/usr/src/blog:ro
+      - blog:/srv:rw
 
   caddy:
     image: caddy
@@ -23,7 +35,7 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./caddy_data:/data:rw
-      - blog:/var/blog:ro
+      - blog:/srv:ro
 
   gitea:
     image: gitea/gitea

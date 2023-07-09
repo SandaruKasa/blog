@@ -1,5 +1,2 @@
-**/.git*
-.dockerignore
-Dockerfile
-docker-compose.yml
-public/
+# Compose has no way of building images without a context, so...
+*
