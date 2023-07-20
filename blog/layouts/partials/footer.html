@@ -1,0 +1,20 @@
+<footer class="common-footer">
+    <div class="common-footer-bottom">
+        <div class="copyright">
+            <p>
+                © {{ if isset .Site.Params "author"}}{{ .Site.Params.author }}, {{end}}{{ now.Year }}
+                {{ $file_path := "" }}
+                {{ with .File }}
+                {{ $file_path = .File.Path }}
+                {{ end }}
+                {{ if ne $file_path "/about.md" }}
+                <br>
+                <a class="u-url" href="/about/">About</a>
+                {{ end }}
+            </p>
+        </div>
+    </div>
+
+    <!-- TODO: what is this? -->
+    {{ partial "h-card.html" . }}
+</footer>

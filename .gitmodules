@@ -1,7 +1,3 @@
-[submodule "blog/themes/apollo"]
-	path = blog/themes/apollo
-	url = https://github.com/not-matthias/apollo.git
-[submodule "blog/themes/atelier_syntax_highlighting"]
-	path = blog/themes/atelier_syntax_highlighting
-	url = https://github.com/atelierbram/syntax-highlighting.git
-	branch = archive
+[submodule "blog/themes/anubis"]
+	path = blog/themes/anubis
+	url = https://github.com/Mitrichius/hugo-theme-anubis.git

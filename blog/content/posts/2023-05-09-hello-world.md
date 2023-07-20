@@ -1,16 +1,14 @@
 +++
 title = "Hello, world!"
 date = "2023-05-09"
-updated = "2023-06-01"
-description = "This site now exists"
-
-[extra]
-tldr = "some rambling about how this site came to be"
+lastMod = "2023-07-21"
+aliases = ["/posts/hello-world"]
+summary = "This site now exists."
 +++
 
-# Getting the domain name
+## Getting the domain name
 
-## But which one do I even want?
+### But which one do I even want?
 
 There's this [cool site with a lot of info on TLDs and whatnot](https://tld-list.com/tlds-from-a-z).
 An interesting thing to scroll through.
@@ -28,7 +26,7 @@ but apparently `.sucks` kinda sucks: it costs quite a sum & the fact that `get.s
 Eventually I settled on... well, you already know.
 `.observer` sounded cool and even turned out to be one of the cheapest option out there.
 
-## Buying the thing
+### Buying the thing
 
 [Spaceship](https://www.spaceship.com/). Amazing registrar, can't name a single flaw:
 + had the lowest price out there,
@@ -48,9 +46,9 @@ Funnily enough, other Russian registrars charge even more, so if you compare
 Russian prices in dollars to USA prices, it turns out that $1 = 150₽,
 which is two times more than what Google or some bank gives you (77₽ as of writing this).
 
-# Making the website
+## Making the website
 
-## Blog
+### Blog
 
 Static HTML. Rendered from `.md` files with the help of [Zola](https://www.getzola.org/).
 
@@ -64,7 +62,7 @@ But I guess I can just move the static files into the Caddy container.
 
 Speaking of which,
 
-## Caddy
+### Caddy
 
 It does miracles.
 
@@ -103,10 +101,10 @@ and the logs themselves include all the important info you might need to trouble
 
 The format for settings, the "`Caddyfile`", is nicely readable and pleasant to write,
 albeit takes a tiniest amount of time to get used to.
-But if it's not your cup of tea, or the config is written by machine and not a human,
+But if it's not your cup of tea or if the config is written by a machine and not a human,
 you can just use `JSON`, Caddy supports that too.
 
-## Docker
+### Docker
 
 With compose.
 Probably the easiest way to set up some THING consisting of heterogenous compound parts.
@@ -116,7 +114,7 @@ Portable, reproducible, convenient. What else can you ask for?
 I'm not in Norway, so not much trouble aside from port bindings
 being treated as hexadecimal numbers.)
 
-## Git
+### Git
 
 [Gitea](https://gitea.io/) was my choice.
 Minimalistic, easy to set up, pleasant to use.
@@ -124,9 +122,9 @@ Not much to say here, because it never gave me any trouble (so far).
 
 It's written in Go. Which bring me to my next topic.
 
-# Closing thoughts
+## Closing thoughts
 
-## Golang
+### Golang
 
 A really good async runtime, coupled with a... *peculiar* language to say the least.
 But does that really matter if this language powers so much good stuff.
@@ -141,14 +139,23 @@ Heh.
 
 Time to post about Rust I guess.
 
-## The source code
+### The source code
 
 Is it really "code"?
 It's mostly just configs and assets, but whatever.
 
-+ [GitHub](https://github.com/SandaruKasa/sklad.observer)
-+ [Gitea](https://gitea.sklad.observer/SandaruKasa/SKlad)
++ [GitHub](https://github.com/SandaruKasa/blog)
++ [Gitea](https://gitea.sklad.observer/SandaruKasa/blog)
 
-# UPD
-I've got rid of fasthttpd, because Caddy can serve static files too.
-That's one less (fewer?) golang dependency.
+## UPD
+I've got rid of FastHttpd, because Caddy can serve static files too. \
+That's one less (fewer?) Golang dependency.
+
+I've switched from Zola to [Hugo](https://gohugo.io/), which is written in Go. \
+That's one more Golang dependency.
+
+Zola was also the only non-Golang dependency, so now this site is 100% Go, heh.
+
+But yeah, Zola just felt like an unfinished & shabby rewrite of Hugo into Rust,
+and wasn't pleasant to deal with overall.
+Thanks, Luke Smith, for [introducing me to Hugo](https://youtu.be/jAXKSKb3etk).

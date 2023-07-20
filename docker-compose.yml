@@ -1,22 +1,21 @@
 version: "3.8"
 services:
   blog:
-    build:
-      context: "blog"
-      dockerfile: "zola.dockerfile"
+    build: hugo
+    image: hugo
     command:
       [
-        "--root",
+        "--noBuildLock",
+        "--cleanDestinationDir",
+        "-s",
         "/usr/src/blog",
-        "build",
-        "--output-dir",
-        "/srv/blog",
-        "--force"
+        "-d",
+        "/srv/blog"
       ]
     restart: "no"
     volumes:
       - ./blog:/usr/src/blog:ro
-      - blog:/srv:rw
+      - blog:/srv/blog:rw
 
   caddy:
     image: caddy
@@ -35,7 +34,7 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./caddy_data:/data:rw
-      - blog:/srv:ro
+      - blog:/srv/blog:ro
 
   gitea:
     image: gitea/gitea

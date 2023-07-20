@@ -1,0 +1,137 @@
+/* Stolen from the white text guy. His taste is exquisite. */
+:root {
+    --black: #000000;
+    --dark-green: #082A00;
+    --mid-green: #0E4603;
+    --bright-green: #2CFF4B;
+    --white: #FFFFFF;
+}
+
+
+/* Variables that go downstream to Anubis. */
+:root {
+    --missing-texture: #f800f8;
+
+    --font-color: var(--white);
+    --bg-color: var(--black);
+
+    --link-color: var(--bright-green);
+    --link-state-color: var(--white);
+    --link-state-border-color: var(--white);
+
+    --thead-bg-color: var(--missing-texture);
+    --table-border-color: var(--missing-texture);
+
+    --nav-bg-color: var(--black);
+    --nav-link-color: var(--missing-texture);
+
+    /* Monospace blocks: */
+    --pre-color: var(--white);
+    --pre-bg-color: var(--dark-green);
+
+    /* Blockquote */
+    --bq-color: var(--missing-texture);
+
+    /* Horizontal lines */
+    --hr-color: var(--white);
+
+    --pagination-bg-color: var(--missing-texture);
+    --pagination-link-color: var(--missing-texture);
+
+    /* Date, tags */
+    --post-info-color: var(--bright-green);
+
+    /* The paperclip for anchoring to headers */
+    --svg-color: var(--bright-green);
+    --svg-state-color: var(--bright-green);
+}
+
+
+/* The general layout and color palette */
+
+html {
+    background-color: var(--black);
+
+    height: 100%;
+
+    padding: 8px 0px;
+
+    /* Without this, small pages get taller than the screen. */
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--dark-green);
+
+    min-width: 10rem;
+    max-width: 85rem;
+    min-height: 100%;
+
+    margin: auto;
+
+    padding: 24px 0px;
+}
+
+.container {
+    background-color: var(--mid-green);
+
+    max-width: 944px;
+
+    padding: 0 24px;
+}
+
+code {
+    padding: 0.2em 0.4em;
+    border-radius: 5px;
+}
+
+.common-header {
+    padding-bottom: 0.5em;
+}
+
+.common-footer {
+    padding: 0.5em;
+}
+
+
+/* Playing with fonts. */
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+}
+
+html {
+    font-family: 'JetBrains Mono', 'Noto Sans Mono', monospace;
+}
+
+h1.site-title {
+    font-size: 1.5em;
+}
+
+.post h1.post-title {
+    font-size: 2.5em;
+}
+
+
+/* Cool prefixes for headings. */
+
+h2::before {
+    color: var(--bright-green);
+    content: "# ";
+}
+
+h3::before {
+    color: var(--bright-green);
+    content: "## ";
+}
+
+h4::before {
+    color: var(--bright-green);
+    content: "### ";
+}
+
+h5::before {
+    color: var(--bright-green);
+    content: "#### ";
+}

@@ -1,66 +1,84 @@
-# Zola loves caluclating absolute links (even for #anchors within a page),
-# but since "/some/url" resolves from the root of the domain,
-# this would ruin Zola-generated sites that don't start at the root of a domain.
-# I.e. having a url pointing to "/post-1" at "https://example.com/blog/"
-# resolves to "https://example.com/post-1" and not "https://example.com/blog/post-1".
-# That's why Zola prepends this `base_url` to all absolute links.
+# ============ HUGO SETTINGS ============
+
+# Hugo occasionaly caluclates absolute links (even when the realtive ones would do),
+# to allow sites start not at the root of a daomain.
 # But since I have an entire subdomain, I can just set this to "/",
 # which has an additional benifit of not requiring me to change this param
-# every time I want to launch it without https or on localhost.
-base_url = "/"
+# every time I want to launch the site without https or on localhost.
+# (Commenting this line out or setting it to "" seems to have the same effect).
+baseURL = "/"
 title = "SKлад постов"
-minify_html = false
+theme = "anubis"
 
-theme = "apollo"
+cleanDestinationDir = true
 
-compile_sass = false
-build_search_index = false
-generate_feed = true
+# TODO: https://youtu.be/1iTnkzdt1mw?t=7
+# enableRobotsTXT = true
 
-[[taxonomies]]
-name = "tags"
-
-[markdown]
-highlight_code = true
-extra_syntaxes_and_themes = [
-    "themes/atelier_syntax_highlighting/docs/archive/atelier-schemes/output/textmate/",
-]
-highlight_theme = "base16-atelierdune.dark"
-
-smart_punctuation = true
-
-external_links_target_blank = true
-external_links_no_follow = true
-external_links_no_referrer = true
-
-[slugify]
-paths_keep_dates = false
-
-[search]
-include_title = true
-include_description = true
-include_path = true
-include_content = true
+# Hugo serves static files directly at the site root
+# with seemingly no option to alter this behavior.
+# https://gohugo.io/content-management/static-files/
+# Huh. But whatever.
 
 
-[extra] # https://www.getzola.org/themes/apollo/
-# Table of contents
+# Minify some of the stuff.
+# Sadly, Hugo decided to name these params `disableCSS`, `disableHTML`, etc. (with the default = `false`)
+# instead of having `minifyCSS`, `minifyHTML`, etc. (with the default value of `true`).
+# So you kinda have to deal with this double negation now.
+# Then there's also the `minifyOutput` flag.
+# When set to `false` (which is its default value),
+# it disables minification completely, overriding all other params.
+# Needlessly convoluted, but fortunately not that hard to figure out thanks to the docs:
+# https://gohugo.io/getting-started/configuration/#configure-minify
+[minify]
+minifyOutput = true
+disableCSS = true
+# disableHTML = true
+disableJS = true
+# disableJSON = true
+# disableSVG = true
+disableXML = true
+
+[markup.highlight]
+style = "native"
+
+
+[markup.tableOfContents]
+# ordered = false
+# startLevel = 2
+endLevel = 4
+
+# ============ ANUBIS SETTINGS ============
+
+[params]
+# Gets included in the footer.
+author = "サンダル 傘"
+# This seems to mainly affect some meta tags used by Twitter previews and whatnot.
+description = "Hello, there" # TODO: change to something reasonable
+
+# Generate Table of Contents for 600+ words long posts
 toc = true
+tocWordCount = 600
 
-favicon = "/crises.png"
-theme = "dark"
-stylesheets = ["scratch.css"]
+# Show a "Read more..." button under the post preview.
+# Sadly, doesn't work for posts with `summary = "..."` set in the front matter.
+readMore = true
 
-[[extra.socials]]
-name = "GitHUb"
+# === CSS ===
+style = "dark-without-switcher"
+# A proper way to add sustom CSS would be to put the file into the `assets/` directory
+# and then add a leave a relative path to it here:
+# customCSS = ["css/scratch.css"]
+# But this makes Anubis include the contents of the file into the big `main.css`
+# instead of adding another `<link rel="stylesheet" ... />` to the HTMLs.
+# This might be a better approach than serving custom CSS files from `static/`
+# (considering Hugo probably won't minify static files, won't generate integrity checks, etc.),
+# but I want my CSS as a separate file, so instead I overwrite `layouts/partials/head-extra.html`.
+# https://vignette1.wikia.nocookie.net/godzilla/images/8/81/Genius-meme.png
+
+# === Social icons ===
+rssAsSocialIcon = true
+
+[[params.social]]
+id = "github"
 url = "https://github.com/SandaruKasa"
-icon = "github"
-
-
-[[extra.menu]]
-name = "Posts"
-url = "/posts"
-
-[[extra.menu]]
-name = "About"
-url = "/about"
