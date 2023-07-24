@@ -27,9 +27,9 @@ services:
     restart: always
 
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+      - "0.0.0.0:443:443/udp"
 
     # TODO: check if this is the optimal way
     user: "1000:1000"
@@ -43,7 +43,7 @@ services:
     restart: always
 
     ports:
-      - "3222:22"
+      - "0.0.0.0:3222:22"
 
     environment:
       - USER_UID=1000
