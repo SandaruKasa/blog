@@ -30,7 +30,7 @@
     --pre-bg-color: var(--dark-green);
 
     /* Blockquote */
-    --bq-color: var(--missing-texture);
+    --bq-color: var(--bright-green);
 
     /* Horizontal lines */
     --hr-color: var(--white);
@@ -80,10 +80,25 @@ body {
     padding: 0 24px;
 }
 
-code {
+:not(pre)>code {
     padding: 0.2em 0.4em;
     border-radius: 5px;
 }
+
+.highlight {
+    overflow: inherit;
+}
+
+
+/* This is stupid */
+li .highlight {
+    margin-right: 40px;
+}
+
+li li .highlight {
+    margin-right: 80px;
+}
+
 
 .common-header {
     padding-bottom: 0.5em;

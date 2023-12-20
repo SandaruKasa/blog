@@ -1,9 +1,12 @@
 +++
 title = "Hello, world!"
+slug = "hello-world"
+summary = "This site now exists."
+tags = ["meta", "web"]
+
 date = "2023-05-09"
 lastMod = "2023-07-21"
-aliases = ["/posts/hello-world"]
-summary = "This site now exists."
+aliases = ["/posts/2023-05-09-hello-world"]
 +++
 
 ## Getting the domain name
