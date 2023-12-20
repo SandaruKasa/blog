@@ -43,6 +43,7 @@ disableXML = true
 style = "native"
 
 
+# You cannot set this per-post. Annoying.
 [markup.tableOfContents]
 # ordered = false
 # startLevel = 2

@@ -120,10 +120,6 @@ html {
     font-family: 'JetBrains Mono', 'Noto Sans Mono', monospace;
 }
 
-h1.site-title {
-    font-size: 1.5em;
-}
-
 .post h1.post-title {
     font-size: 2.5em;
 }
@@ -146,7 +142,21 @@ h4::before {
     content: "### ";
 }
 
+
 h5::before {
     color: var(--bright-green);
-    content: "#### ";
+    content: "$ ";
+}
+
+h6::before {
+    color: var(--bright-green);
+    content: "$$ ";
+}
+
+
+h5,
+h6 {
+    text-indent: 0.5em;
+    margin-block: 1em;
+    font-size: 1em;
 }

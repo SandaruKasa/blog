@@ -17,3 +17,7 @@ draft = true
 - themes
 - future
     - timezone
+- toc per post settings
+
+# mardown sucks
+- codeblock in table
