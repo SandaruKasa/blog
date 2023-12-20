@@ -5,6 +5,7 @@ summary = "Some of my pain points when dealing with Haskell"
 tags = ["Haskell", "complaints"]
 
 date = "2023-12-20"
+lastMod = "2023-12-21"
 +++
 
 Fun(?) fact: this website was created because I wanted to write a giant post
@@ -14,11 +15,85 @@ I love it a lot, that's why its weaker parts worry me so much.
 
 But that post is taking ages to write,
 so in the meantime here's a smaller one about Haskell
-(which still took 5 times longer to write than I anticipated).
+(which still took 5 times longer to write than I anticipated)
+with frequent comparisons to Rust, Java, C, C++, and Python.
 
 Roughly in order from the least to the most annoying:
 
-## Dependency Hell
+## Naming
+
+Come to Haskell. We have:
+
+- [`<$>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--36--62-) &
+    [`<&>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--38--62-)
+- [`<$`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--36-) &
+    [`$>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Functor.html#v:-36--62-)
+    (which isn't called `&>` for some reason)
+- [`<*>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--42--62-),
+  [`<*`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--42-),
+  [`*>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-42--62-)
+- [`>>=`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-62--62--61-),
+    which isn't bit shift right and assign, but rather something related to Monads.
+- [Monads](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Monad) &
+    [Monoids](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Monoid).
+    Which are different things: Monoid is a
+    [Semigroup](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Semigroup)
+    with a neutral element, while Monad is a special kind of an
+    [Applicative](`https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Applicative`),
+    which is a special kind of a
+    [Functor](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Functor).
+    There is also another special case of Applicative,
+    an [Alternative](https://hackage.haskell.org/package/base-4.19.0.0/docs/Control-Applicative.html#t:Alternative).
+    Unrelated to Functor, there is
+    [Foldable](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Foldable),
+    but sometimes a Foldable Functor can be
+    [Traversable](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Traversable).
+- Speaking of Foldable, there is `foldr`, `foldl` & `foldl'`.
+    [You probably don't want to use `foldl`](https://wiki.haskell.org/Foldr_Foldl_Foldl'#Rules_of_Thumb_for_Folds).
+- Do you concatenate strings using
+    [`++`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-43--43-) or
+    [`<>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--62-)?
+    `++` is the actual list concatenation (and `String` is just an alias for `[Char]`),
+    but lists are also an instance of a Semigroup, with their associative operation of
+    choice being concatenation. I.e.
+    ```haskell
+    instance Semigroup [a] where
+        (<>) = (++)
+    ```
+- `class` isn't what it is in Java or C++.
+    Haskell's class is what Rust calls traits and Java calls interfaces.
+    For Java's `class` (Rust's or C's `struct`,
+    C++'s `class` or `struct`
+    [because it would be too boring to only have one](https://stackoverflow.com/q/92859))
+
+    Haskell offers `data` & `newtype`.
+    `newtype` being a special `data` with 1 constructor, 1 field,
+    [slightly different laziness semantics & layout guarantees](https://stackoverflow.com/a/5889784)
+    as well as
+    [some automatic derivation perks](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/newtype_deriving.html).
+
+    For more comparisons, see [the appendix](#comparisons).
+- I, personally find
+    ```rust
+    enum Option<T> {
+        Some(T),
+        None,
+    }
+    ```
+    to be a more concise naming than
+    ```haskell
+    data Maybe a = Just a | Nothing
+    ```
+    but this might be subjective.
+
+    What is closer to objectively unfortunate naming is Haskell's `Either`.
+    <!-- TODO -->
+
+
+<!-- TODO: unavoidable -->
+<!-- TODO: unwrap_or_else -->
+
+## Infrastructure
 
 No package manager out of the box.
 
@@ -44,8 +119,7 @@ But Nix has its own collection of packages, downstreamed from Stackage (iirc),
 as well as [several other ways to do Haskell with Nix](https://nixos.wiki/wiki/Haskell).
 If you're on Linux, your package manager's repositories probably downstream Stackage as well.
 
-
-## Installing GHC
+### Installing GHC
 
 Screw dependencies, how do you want to install GHC?
 From your package manager?
@@ -77,7 +151,9 @@ And still, this is a bit too many options for my liking,
 with none of them being clearly superior
 ~~except for stack with Nix integrations installed through Nix~~.
 
-### The Type That Shall Not Be Named
+### Dependency shenanigans
+
+#### The Type That Shall Not Be Named
 
 Unrelated, but why was Voldemort's (pseudo)name so avoided?
 This is a very unrealistic plot point in my favorite book about magic and wizards.
@@ -115,7 +191,7 @@ x = foo 1
 ```
 you cannot actually name the type of `x`.
 
-#### Solutions?
+##### Solutions?
 
 There's a few:
 
@@ -157,9 +233,9 @@ And not because Rust prevents this from happening somehow.
 
 Oh, by the way,
 
-#### How do other languages deal with this problem?
+##### How do other languages deal with this problem?
 
-##### Rust
+###### Rust
 
 Doesn't ([at least yet](https://github.com/rust-lang/rust/issues/44663)).
 
@@ -176,12 +252,12 @@ But for now, you pretty much have the same options as with Haskell:
     pub type X = T;
     ```
 
-##### Python
+###### Python
 
 If you have `b` installed, you have `a` installed. So just import it.
 
 
-##### C & C++
+###### C & C++
 
 Header files.
 
@@ -192,7 +268,7 @@ as a last resort.
 
 IDK about modules, but it's not like anyone supports them yet.
 
-### No namespaces for modules
+#### No namespaces for modules
 
 Module names aren't prefixed with package names.
 Not only is not enforced like in C or C++, it is also not the standard practice.
@@ -212,12 +288,14 @@ Usually you probably don't even care where the stuff comes from anyway.
 
 But in some cases I found it to be considerately inconvenient.
 
-1. Trying to write some code for an std-only target
-    (if we're using [GCC parlance](https://gcc.gnu.org/onlinedocs/gccint/Configure-Terms.html),
-    it was *build* & *host*, but not *target*)
+1. Trying to write some code for an std-only target[^target]
     while using GHC installed with my system's package manager.
     Ended up accidentally using things from system-wide-installed packages,
     which were not available on the target.
+
+    [^target]: If we're using
+        [GCC parlance](https://gcc.gnu.org/onlinedocs/gccint/Configure-Terms.html),
+        it was *build* & *host*, but not *target*.
 2. Searching for functions by signature on Hoogle gives a ton of results
     from foreign packages, which makes it easier to miss that such
     a function already exists in std / your dependencies,
@@ -242,7 +320,13 @@ But in some cases I found it to be considerately inconvenient.
     or is it more likely that I'm just missing some important idea
     and doing things wrong?
 
-## No namespaces
+### Unit tests
+
+<!-- TODO -->
+
+## Language design
+
+### No namespaces
 
 I don't mean modules.
 
@@ -251,9 +335,8 @@ freestanding functions, functions closely associated with some data type,
 or belonging to a particular typeclass.
 
 And while it might not be crucial to differentiate
-between freestanding functions &
-those associated with some datatype (see:
-[D](https://dlang.org/spec/function.html#pseudo-member) &
+between freestanding functions & those associated with some datatype
+(see: [D](https://dlang.org/spec/function.html#pseudo-member) &
 [UFCS](https://en.wikipedia.org/wiki/Uniform_Function_Call_Syntax))
 or between those associated with a datatype & belonging to some typeclass
 (see: Java making no difference between classes' and interfaces' methods),
@@ -298,3 +381,241 @@ What's funny is that I can't even go,
 "Having to prefix your names to avoid collisions is so 1970's!
 What are you, C with no namespaces?"
 because even C actually nailed scoping field names & using context to get rid of collisions.
+
+## Appendices
+
+### Appendix A. Haskell vs Rust vs Java {#comparisons}
+
+This sections would've been great as a table with codeblocks,
+but you cannot do that in Markdown[^markdown].
+So instead, enjoy this <!-- TODO -->
+
+[^markdown]: Unless you are willing to write HTML by hand.
+    Including all the classes necessary for your CSS to apply
+    as well as the terrible boilerplate for syntax highlighting.
+    I.e.: do the job of your markdown renderer for it.
+
+    The closest you get is [grid tables with pandoc](https://stackoverflow.com/a/35635553),
+    but my renderer doesn't support those, and even pandoc
+    [doesn't seem to support syntax highlighting inside of those](https://stackoverflow.com/questions/32085498/markdown-how-to-insert-java-code-block-inside-table-cell/35635553#comment86930341_35635553).
+
+
+<!-- TODO: comparisons are inaccurate -->
+
+#### Simple structure
+
+```haskell
+data A = A Int String
+```
+
+```rust
+struct A(i32, String)
+```
+
+```java
+class A {
+    int field1;
+    String field2;
+}
+```
+
+#### Record
+
+```haskell
+data A = A { field1 :: Int, field2 :: String }
+```
+
+```rust
+struct A {
+    field1: i32,
+    field2: i32,
+}
+```
+
+```java
+record A(int field1, String field2) { }
+```
+
+#### Generic
+
+```haskell
+data A t = A { ts :: [t] }
+```
+
+```rust
+struct A<T> {
+    ts: Vec<T>,
+}
+```
+
+```java
+class A {
+    List<T> ts;
+}
+```
+
+#### class / trait / interface
+
+All of the following code snippets print
+```
+Hello, I'm John!
+Bye!
+```
+
+##### Haskell: class, =>, instance
+
+```haskell
+class Name a where
+    getName :: a -> String
+
+class (Name a) => Greet a where
+    sayHi :: a -> String
+    sayHi me = "Hello, I'm " <> getName me <> "!"
+
+    sayBye :: a -> String
+    sayBye me = "Sincerely yours,\n" <> getName me
+
+data Person = Person { name :: String }
+
+instance Name Person where
+    getName = name
+
+instance Greet Person where
+    sayBye _ = "Bye!"
+
+main :: IO ()
+main = do
+    let john = Person { name = "John" }
+    putStrLn $ sayHi john
+    putStrLn $ sayBye john
+```
+
+##### Rust: trait, :, impl for
+
+```rust
+trait Name {
+    fn get_name(&self) -> String;
+}
+
+trait Greet: Name {
+    fn say_hi(&self) -> String {
+        format!("Hello, I'm {}!", self.get_name())
+    }
+    fn say_bye(&self) -> String {
+        format!("Sincerely yours,\n{}", Name::get_name(self))
+    }
+}
+
+struct Person {
+    name: String,
+}
+
+impl Name for Person {
+    fn get_name(&self) -> String {
+        self.name.clone()
+    }
+}
+
+impl Greet for Person {
+    fn say_bye(&self) -> String {
+        "Bye!".to_string()
+    }
+}
+
+fn main() {
+    let john = Person {
+        name: "John".to_string(),
+    };
+    println!("{}", john.say_hi());
+    println!("{}", john.say_bye());
+}
+```
+
+##### Java: interface, extends, implements
+
+```java
+interface Name {
+  String getName();
+}
+
+interface Greet extends Name {
+  default String sayHi() {
+    return "Hello, I'm " + this.getName() + "!";
+  }
+
+  default String sayBye() {
+    return "Sincerely yours,\n" + this.getName();
+  }
+}
+
+class Person implements Greet {
+  String name;
+
+  Person(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String getName() {
+    return this.name;
+  }
+
+  @Override
+  public String sayBye() {
+    return "Bye!";
+  }
+}
+
+public class Example {
+  public static void main(String[] args) {
+    var john = new Person("John");
+    System.out.println(john.sayHi());
+    System.out.println(john.sayBye());
+  }
+}
+```
+
+#### Sigma type
+
+```haskell
+data Response
+    = Received
+        { statusCode :: Int
+        , body       :: String
+        }
+    | IOError String
+```
+
+```rust
+enum Response {
+    Received { status_code: u16, body: String },
+    IOError(String),
+}
+```
+
+Java does have `enum`s, but they do not support having different fields per variant.
+
+#### Newtype
+
+```haskell
+newtype URL = URL String
+```
+
+```rust
+#[repr(transparent)]
+struct URL(String)
+```
+
+Isn't really a thing in Java.
+
+Haskell has [Generalized Newtype Deriving](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/newtype_deriving.html),
+Rust has [Deref](https://doc.rust-lang.org/stable/std/ops/trait.Deref.html).
+
+### Appendix B. Updates {#updates}
+
+#### 2023-12-21
+
+- Tweaked some headings.
+- Added [the section on naming](#naming) & [the section on unit tests](#unit-tests).
+- Added [Haskell vs Rust vs Java comparisons](#comparisons).
+- Added [the list of updates](#updates).
