@@ -5,7 +5,7 @@ summary = "Some of my pain points when dealing with Haskell"
 tags = ["Haskell", "complaints"]
 
 date = "2023-12-20"
-lastMod = "2023-12-21"
+lastMod = "2023-12-22"
 +++
 
 Fun(?) fact: this website was created because I wanted to write a giant post
@@ -18,80 +18,190 @@ so in the meantime here's a smaller one about Haskell
 (which still took 5 times longer to write than I anticipated)
 with frequent comparisons to Rust, Java, C, C++, and Python.
 
+If you're not familiar with Haskell's syntax,
+I recommend you check [an appendix](#comparisons).
+
+Anyways, the complaints.
 Roughly in order from the least to the most annoying:
 
 ## Naming
 
-Come to Haskell. We have:
+### Operators
 
-- [`<$>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--36--62-) &
-    [`<&>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--38--62-)
-- [`<$`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--36-) &
-    [`$>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Functor.html#v:-36--62-)
-    (which isn't called `&>` for some reason)
-- [`<*>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--42--62-),
-  [`<*`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--42-),
-  [`*>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-42--62-)
-- [`>>=`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-62--62--61-),
-    which isn't bit shift right and assign, but rather something related to Monads.
-- [Monads](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Monad) &
-    [Monoids](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Monoid).
-    Which are different things: Monoid is a
-    [Semigroup](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Semigroup)
-    with a neutral element, while Monad is a special kind of an
-    [Applicative](`https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Applicative`),
-    which is a special kind of a
-    [Functor](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Functor).
-    There is also another special case of Applicative,
-    an [Alternative](https://hackage.haskell.org/package/base-4.19.0.0/docs/Control-Applicative.html#t:Alternative).
-    Unrelated to Functor, there is
-    [Foldable](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Foldable),
-    but sometimes a Foldable Functor can be
-    [Traversable](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Traversable).
-- Speaking of Foldable, there is `foldr`, `foldl` & `foldl'`.
-    [You probably don't want to use `foldl`](https://wiki.haskell.org/Foldr_Foldl_Foldl'#Rules_of_Thumb_for_Folds).
-- Do you concatenate strings using
-    [`++`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-43--43-) or
-    [`<>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--62-)?
-    `++` is the actual list concatenation (and `String` is just an alias for `[Char]`),
-    but lists are also an instance of a Semigroup, with their associative operation of
-    choice being concatenation. I.e.
-    ```haskell
-    instance Semigroup [a] where
-        (<>) = (++)
-    ```
-- `class` isn't what it is in Java or C++.
-    Haskell's class is what Rust calls traits and Java calls interfaces.
-    For Java's `class` (Rust's or C's `struct`,
-    C++'s `class` or `struct`
-    [because it would be too boring to only have one](https://stackoverflow.com/q/92859))
+Why name something using letters when you can assign it a bunch of symbols instead?
 
-    Haskell offers `data` & `newtype`.
-    `newtype` being a special `data` with 1 constructor, 1 field,
-    [slightly different laziness semantics & layout guarantees](https://stackoverflow.com/a/5889784)
-    as well as
-    [some automatic derivation perks](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/newtype_deriving.html).
+First there's basic stuff like `:`,
+[`$`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-36-),
+[`.`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:.),
+or [`++`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-43--43-).
 
-    For more comparisons, see [the appendix](#comparisons).
-- I, personally find
-    ```rust
-    enum Option<T> {
-        Some(T),
-        None,
-    }
-    ```
-    to be a more concise naming than
-    ```haskell
-    data Maybe a = Just a | Nothing
-    ```
-    but this might be subjective.
+Btw, do you concatenate strings using `++` or
+[`<>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--62-)?
+`++` is the actual list concatenation (and `String` is just an alias for `[Char]`),
+but lists are also an instance of a
+[Semigroup](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Semigroup),
+with their associative operation of choice being concatenation. I.e.
+```haskell
+instance Semigroup [a] where
+    (<>) = (++)
+```
 
-    What is closer to objectively unfortunate naming is Haskell's `Either`.
-    <!-- TODO -->
+Moving on,
+[`<$>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--36--62-)
+isn't a combination of `$` and `<>`, but instead just a pseudonym for
+[`fmap`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:fmap),
+because letters are lame[^fmap].
+
+[^fmap]: That's a joke, I don't think operators are that evil.
+    See [the appendix](#operators-appendix) for an explanation.
+
+It *is* similar to `$`, though.
+And just like `$` has a mirrored version
+[`&`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Function.html#v:-38-),
+`<$>` has
+[`<&>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--38--62-).
+But
+[`<$`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--36-)'s
+mirror version is
+[`$>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Functor.html#v:-36--62-)
+and not `<&` or `&>`.
+
+You can kinda think of `<$` as a `<$>` that discards the thing on the right.
+Which is why
+[`<*>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--42--62-)
+(that isn't a combination of `*` and `<>`, but is similar to `<>`) has
+[`<*`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--42-) &
+[`*>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-42--62-),
+which discard the thing on the right and the thing on the left respectively.
+
+[`>>=`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-62--62--61-)
+isn't bit shift right and assign but has a mirrored version
+[`=<<`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-61--60--60-),
+as well as a discarding version
+[`>>`](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-62--62-).
+(No `<<`, sadly.)
+
+The best part about all of this is that you can make your own operators!
+My personal favorite is
+
+```haskell
+infixr 9 .*
+(.*) = (.) . (.)
+```
+
+It is like `.`, but composes two-argument functions.
+
+### Monad is just a monoid in the category of endofunctors
+
+[Monads](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Monad) &
+[Monoids](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Monoid)
+are different things: Monoid is a
+[Semigroup](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Semigroup)
+with a neutral element, while Monad is a special kind of an
+[Applicative](`https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Applicative`),
+which is a special kind of a
+[Functor](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Functor).
+There is also another special case of Applicative,
+an [Alternative](https://hackage.haskell.org/package/base-4.19.0.0/docs/Control-Applicative.html#t:Alternative).
+Unrelated to Functor, there is
+[Foldable](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Foldable),
+but sometimes a Foldable Functor can be
+[Traversable](https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Traversable).
+
+### Folds
+
+Speaking of Foldable, there is `foldr`, `foldl` & `foldl'`.
+[You probably don't want to use `foldl`](https://wiki.haskell.org/Foldr_Foldl_Foldl'#Rules_of_Thumb_for_Folds).
+
+### Classes
+
+`class` isn't what it is in Java or C++.
+Haskell's class is what Rust calls traits and Java calls interfaces.
+For Java's `class` (Rust's or C's `struct`,
+C++'s `class` or `struct`
+[because it would be too boring to only have one](https://stackoverflow.com/q/92859))
+Haskell offers `data` & `newtype`.
+`newtype` being a special `data` with 1 constructor, 1 field,
+[slightly different laziness semantics & layout guarantees](https://stackoverflow.com/a/5889784)
+as well as
+[some automatic derivation perks](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/newtype_deriving.html).
+For more comparisons, see [the appendix](#comparisons).
+
+### Just use Either
+
+I, personally find
+```rust
+enum Option<T> {
+    Some(T),
+    None,
+}
+```
+to be a more concise naming than
+```haskell
+data Maybe a = Just a | Nothing
+```
+but this might be subjective.
+
+What is closer to objectively unfortunate naming is Haskell's `Either`.
+On the surface, a pretty simple concept: a union of two types
+
+```haskell
+data Either a b = Left a | Right b
+```
+
+`Left` and `Right` might not be the most clear ways to name the two alternatives,
+but I'm not sure how else you would name the options in such a general type.
+
+Except it's not general at all:
+> The `Either` type is sometimes used to represent a value
+> which is either correct or an error;
+> by convention, the `Left` constructor is used to hold an error value
+> and the `Right` constructor is used to hold a correct value
+> (mnemonic: "right" also means "correct").
+>
+> [[source]((https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#t:Either)])]
+
+Sadly, this piece of documentation lies.
+It's not "sometimes", it's *most of the time*.
+
+So instead of using a type like
+```rust
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+you just have to remember that `Left` means `Error`.
+
+Not only that, but the type also ends up being asymmetric without it being
+reflected in its name in any way.
+What I mean is that `Either` is an instance of
+`Functor`, `Applicative`, `Monad`, `Foldable`, and `Traversable`
+but only over its right part[^instance].
+
+[^instance]: Or, more accurately, `Either a` is an instance of all of those classes.
+
+As for the use-case that *is* reflected in the name
+(that is, a union of two arbitrary types),
+you probably shouldn't actually use `Either` here,
+because I'm pretty sure everyone expects it to be used for error handling.
 
 
-<!-- TODO: unavoidable -->
-<!-- TODO: unwrap_or_else -->
+### But oh well
+
+Honestly speaking, I don't think it is actually possible to come up with
+sensible names for **all** of that stuff.
+
+After all, is `<$>` as a name that harder to memorize than,
+say, [`std::cout <<`](https://en.cppreference.com/w/cpp/io/cout#Example) or 
+[`unwrap_or_else`](https://doc.rust-lang.org/stable/std/result/enum.Result.html#method.unwrap_or_else)?
+[I wouldn't say so](#operators-appendix).
+
+Unusual? True. Bad? Not necessarily.
+
+A lot of syntax (and way of thinking in general) in Haskell
+takes some time to get used to. But not because it is hard or unreasonable,
+rather just because of how different it is from the mainstream languages.
 
 ## Infrastructure
 
@@ -322,7 +432,65 @@ But in some cases I found it to be considerately inconvenient.
 
 ### Unit tests
 
-<!-- TODO -->
+The best way to write unit tests for private interfaces in Haskell
+is [to make those interfaces public](https://stackoverflow.com/a/14379426)
+and write your tests in a separate package using a hand-rolled or a 3rd-party framework.
+Unfortunate.
+
+~~Java's situation is a bit better: JUnit is still a 3rd-party framework but at least
+it allows you to test implementation details.~~
+Nope, it doesn't. I just double-checked and apparently you have to use reflections for that.
+Also, googling "junit test private method" gives you several articles
+starting with that you shouldn't write unit tests for your private code anyways,
+because ***incapsulation***, SOLID, and all of the other OOP stuff.
+Lmao, what a cope, "You shouldn't write tests for your code, it's ideologically incorrect!"
+
+Speaking of ideology. Rust.
+
+Rust has [first-class support for unit tests](https://doc.rust-lang.org/rust-by-example/testing/unit_testing.html).
+You don't need to slap a 3rd-party framework on top of it.
+You *can* if you want more specific options, but most of the time there is no need for that.
+
+In my experience, this low barrier for writing tests is really important.
+Usually I find myself not writing any tests in my personal projects,
+just because I'm too lazy to set the entire thing up.
+The most I am willing to do, is to launch a REPL to poke once or twice
+the function I'm currently writing
+or maybe to slap a temporary debug statement somewhere in `main`.
+Those checks doesn't persist anywhere after that.
+
+With Rust I just write unit tests,
+because I can write them in the same file that I am writing the code in
+(or a file right next to it) and the only boilerplate I have to write is
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn check_ ...
+```
+No additional configuration, no extra dependencies, just
+```shell
+$ cargo test
+```
+and there you are!
+
+Most of the time I don't want to test big pieces of code in public interfaces.
+I just want to make sure that this small private function does what I want it to.
+I won't bother with an entire framework for a simple sanity check.
+I don't wan't to expose this stupid ten-liner in a public interface just to be able to test it.
+I just want to make sure it doesn't break when I pass in `-1`.
+
+Surprisingly, even these small checks help catching bugs or
+spotting that something is wrong faster.
+Plus just like proper unit tests, they persist, so you can easily make sure
+you do not break any stuff later on.
+
+Writing these is so straight-forward that occasionally
+I will even start with writing a test for what I'm about to create.
+This often helps to evaluate how good the interface is before even attempting to implement it.
+Is this effectively [design by contract](https://en.wikipedia.org/wiki/Design_by_contract)?
 
 ## Language design
 
@@ -353,7 +521,7 @@ or resolving them from the context.
 
 So you end up prefixing all of your fields' names with some abbreviation.
 
-Here's an extract from a real style guide used by real haskell programmers:
+Here's an extract from a real style guide used by real Haskell programmers:
 
 > Field name for `newtype` *should* start with `un` or `run` prefix followed by
 > type name (motivated by [this
@@ -384,11 +552,132 @@ because even C actually nailed scoping field names & using context to get rid of
 
 ## Appendices
 
-### Appendix A. Haskell vs Rust vs Java {#comparisons}
+### Appendix A. Operators {#operators-appendix}
+
+In all honesty, I *can* see why operators are used so much.
+Let me explain using an example.
+
+First, let's get rid of all those strange `fmap`/`liftA2`-like names
+and weird operators.
+Now, let's look at a snippet from some parser (because what else do you write in Haskell?).
+
+```haskell
+as Literal (
+    or
+    (right (consume '(') (left parseNumber (consume ')')))
+    (and parseReal parseImaginary)
+)
+```
+Oops, that's not Haskell, that's just Lisp with missing parenthesis around the main expression.
+Not inherently bad, and of course sometimes syntactic simplicity is great
+([not always though](https://matklad.github.io/2023/01/26/rusts-ugly-syntax.html)).
+But I argue this piece of code will require less effort to read when we Haskell-ify it back.
+
+Let's recall that `$` exists to get rid of parenthesis spanning until the end of an expression
+and that we can turn any function into an operator like ``` `so` ```.
+```haskell
+as Literal $
+    (consume '(' `right` parseNumber `left` consume ')')
+    `or`
+    (parseReal `and` parseImaginary)
+```
+
+That's a bit better I'd say.
+Humans don't usually think in [S-expressions](https://en.wikipedia.org/wiki/S-expression)
+(or maybe it's just my
+[SVO](https://en.wikipedia.org/wiki/Subject%E2%80%93verb%E2%80%93object_word_order)-wired brain).
+Also I'm pretty sure `and` has a higher priority than `or`.
+
+```haskell
+as Literal $
+    (consume '(' `right` parseNumber `left` consume ')')
+    `or` parseReal `and` parseImaginary
+```
+
+Still a bit tough on the eyes. Maybe capital letters?
+
+```haskell
+AS Literal $
+    (consume '(' RIGHT parseNumber LEFT consume ')')
+    OR parseReal AND parseImaginary
+```
+
+Not bad. Let's compare those side-by-side
+
+```haskell
+as Literal (
+    or
+    (right (consume '(') (left parseNumber (consume ')')))
+    (and parseReal parseImaginary)
+
+AS Literal $
+    (consume '(' RIGHT parseNumber LEFT consume ')')
+    OR parseReal AND parseImaginary
+)
+```
+
+Unfortunately, there's still one problem left.
+I'm pretty sure `OR` & `AND` were taken by boolean operations.
+We could make our language have signature-based function overloads,
+but then we would have to resolve functions from the surrounding types,
+while currently we infer the types by looking at the surrounding functions.
+So unless you want to manually specify types everywhere,
+let's rename those two to, idk, `OR_ELSE` & `AND_THEN`.
+Same deal with `LEFT` & `RIGHT`. Let's prefix them with `TAKE_`.
+
+```haskell
+AS Literal $
+    (consume '(' TAKE_RIGHT parseNumber TAKE_LEFT consume ')')
+    OR_ELSE parseReal AND_THEN parseImaginary
+```
+
+Not as great. Maybe we can...
+
+```haskell
+fmap Literal $
+    (consume '(' *> parseNumber <* consume ')')
+    <|> parseReal <*> parseImaginary
+```
+
+Oh, now that looks like a real Haskell snippet. Except for one thing:
+
+`fmap Constructor $ ...` is so common that we usually just
+
+```haskell
+Literal <$>
+    (consume '(' *> parseNumber <* consume ')')
+    <|> parseReal <*> parseImaginary
+```
+And here we are!
+
+Is it really worse than
+```haskell
+as Literal (
+    or
+    (right (consume '(') (left parseNumber (consume ')')))
+    (and parseReal parseImaginary)
+)
+```
+or
+```c
+Literal {
+    Parser::either(
+        consume('(').discard_and(parseNumber).and_discard(consume(')')),
+        parseReal.and(parseImaginary)
+    )
+}
+```
+?
+
+### Appendix B. Haskell vs Rust vs Java {#comparisons}
 
 This sections would've been great as a table with codeblocks,
 but you cannot do that in Markdown[^markdown].
-So instead, enjoy this <!-- TODO -->
+So instead, I made some headers and ordered code snippets as follows:
+
+1. Haskell
+2. Rust
+3. Java
 
 [^markdown]: Unless you are willing to write HTML by hand.
     Including all the classes necessary for your CSS to apply
@@ -400,56 +689,83 @@ So instead, enjoy this <!-- TODO -->
     [doesn't seem to support syntax highlighting inside of those](https://stackoverflow.com/questions/32085498/markdown-how-to-insert-java-code-block-inside-table-cell/35635553#comment86930341_35635553).
 
 
-<!-- TODO: comparisons are inaccurate -->
+Note that this comparisons are very inaccurate and are here
+only to roughly familiarize you with Haskell.
 
-#### Simple structure
+#### Functions
+
+```haskell
+foo :: Int -> Int -> Int
+foo a b = a * 2 - b + 3
+
+bar :: Int -> Int
+bar a = foo a a
+
+hello :: Named t => t -> String
+hello = "Hello, " ++ name t
+```
+
+```rust
+fn foo(a: i32, b: i32) -> i32 {
+    a * 2 - b + 3
+}
+
+fn bar(a: i32) -> i32 {
+    foo(a, a)
+}
+
+fn hello<T: Named>(t: T) -> String {
+    format!("Hello, {}", t.name())
+}
+```
+
+
+```java
+class Example {
+    static int foo(int a, int b) {
+        return a * 2 - b + 3;
+    }
+
+    static int bar(int a) -> i32 {
+        return foo(a, a);
+    }
+
+    static <T extends Named> String hello(T t) {
+        return "Hello, " + t.name();
+    }
+}
+```
+
+#### Data structures
 
 ```haskell
 data A = A Int String
+
+data B = B { field1 :: Int, field2 :: String }
+
+data C t = C { ts :: [t] }
 ```
 
 ```rust
 struct A(i32, String)
-```
 
-```java
-class A {
-    int field1;
-    String field2;
-}
-```
-
-#### Record
-
-```haskell
-data A = A { field1 :: Int, field2 :: String }
-```
-
-```rust
-struct A {
+struct B {
     field1: i32,
-    field2: i32,
+    field2: String,
 }
-```
 
-```java
-record A(int field1, String field2) { }
-```
-
-#### Generic
-
-```haskell
-data A t = A { ts :: [t] }
-```
-
-```rust
-struct A<T> {
+struct C<T> {
     ts: Vec<T>,
 }
 ```
 
 ```java
-class A {
+class AB {
+    int field1;
+    String field2;
+}
+
+class C<T> {
     List<T> ts;
 }
 ```
@@ -608,14 +924,19 @@ struct URL(String)
 
 Isn't really a thing in Java.
 
-Haskell has [Generalized Newtype Deriving](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/newtype_deriving.html),
-Rust has [Deref](https://doc.rust-lang.org/stable/std/ops/trait.Deref.html).
+Haskell has deriving & [Generalized Newtype Deriving](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/newtype_deriving.html),
+Rust has deriving & [Deref](https://doc.rust-lang.org/stable/std/ops/trait.Deref.html).
+Both can be useful for propagating the behavior of the underlying type to the wrapper.
 
-### Appendix B. Updates {#updates}
+### Appendix C. Updates {#updates}
 
-#### 2023-12-21
+#### 2023-12-22
 
 - Tweaked some headings.
-- Added [the section on naming](#naming) & [the section on unit tests](#unit-tests).
-- Added [Haskell vs Rust vs Java comparisons](#comparisons).
-- Added [the list of updates](#updates).
+- Added a [section about naming](#naming).
+- Added a [subsection on unit tests](#unit-tests).
+- Added an appendix: [Operators](#operators-appendix).
+- Added an appendix: [Haskell vs Rust vs Java comparisons](#comparisons).
+- Added an appendix: [Updates](#updates).
+
+In other words, made this post twice or even thrice as long.

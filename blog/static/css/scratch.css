@@ -80,6 +80,7 @@ body {
     padding: 0 24px;
 }
 
+/* For inline monospace, but not code blocks */
 :not(pre)>code {
     padding: 0.2em 0.4em;
     border-radius: 5px;
@@ -89,16 +90,22 @@ body {
     overflow: inherit;
 }
 
-
-/* This is stupid */
-li .highlight {
-    margin-right: 40px;
+ul,
+ol {
+    padding-inline-end: 40px;
 }
 
-li li .highlight {
-    margin-right: 80px;
+a>code {
+    color: var(--link-color);
 }
 
+a:hover>code,
+a:active>code,
+a:focus>code {
+    color: var(--link-state-color);
+    text-decoration: underline;
+    text-decoration-color: var(--link-state-border-color);
+}
 
 .common-header {
     padding-bottom: 0.5em;
@@ -120,10 +127,9 @@ html {
     font-family: 'JetBrains Mono', 'Noto Sans Mono', monospace;
 }
 
-.post h1.post-title {
-    font-size: 2.5em;
+.content {
+    text-align: justify;
 }
-
 
 /* Cool prefixes for headings. */
 
