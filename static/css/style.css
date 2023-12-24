@@ -1,33 +1,35 @@
-{{ $light := resources.Get "css/light.css" }}
-{{ $dark := resources.Get "css/dark.css" }}
-
-{{ $style := "light-without-switcher" }}
-{{ if and (isset site.Params "style") (ne site.Params.style "") }}
-    {{ $style = site.Params.style | lower }}
-{{ end }}
-
-{{ if eq $style "dark-without-switcher" }}
 :root {
-    {{ $dark.Content }}
+    --font-color: #eee;
+    --bg-color: #212121;
+
+    --link-color: #599ada;
+    --link-state-color: #ff5858;
+    --link-state-border-color: rgba(238, 54, 54, 0.5);
+
+    --thead-bg-color: #343a40;
+    --table-border-color: lightgrey;
+
+    --nav-bg-color: #242424;
+    --nav-link-color: #b6b6b6;
+
+    --pre-color: #f8f8f2;
+    --pre-bg-color: #272822;
+
+    --bq-color: #ccc;
+    --hr-color: #333;
+
+    --pagination-bg-color: #373737;
+    --pagination-link-color: #b6b6b6;
+
+    --post-info-color: grey;
+
+    --switcher-color: #333;
+    --switcher-bg-color: #fff;
+
+    --svg-color: #ccc;
+    --svg-state-color: #ff5858;
+
 }
-
-{{ else }}
-
-{{ $light.Content }}
-
-{{ if eq $style "auto-without-switcher" }}
-@media (prefers-color-scheme: dark) {
-    :root {
-        {{ $dark.Content }}
-    }
-}
-{{ else if ne $style "light-without-switcher" }}
-[data-theme="dark"] {
-    {{ $dark.Content }}
-}
-{{ end }}
-
-{{ end }}
 
 /* Basic */
 html {
@@ -687,19 +689,6 @@ ul.language-select > li, ul.footer-menu > li {
     margin-right: 1em;
 }
 
-.theme-switcher {
-    color: var(--switcher-color);
-    background: var(--switcher-bg-color);
-    padding: 0.5em 1em;
-    font-size: 16px;
-    border: none;
-    margin-bottom: 1em;
-}
-
-.h-card {
-    display: none;
-}
-
 /* Copy code  */
 .highlight {
     position: relative;
@@ -780,17 +769,10 @@ ul.language-select > li, ul.footer-menu > li {
     }
 }
 
-{{ range site.Params.customCSS }}
-    {{ $custom := resources.Get . }}
-    {{ $custom.Content }}
-{{ end }}
-
-{{ if site.Params.isso.enabled }}
-  #isso-thread .textarea {
+#isso-thread .textarea {
     color: #000;
-  }
-  #isso-thread .isso-feedlink {
+}
+#isso-thread .isso-feedlink {
     position: relative;
     z-index: 1;
-  }
-{{ end }}
+}

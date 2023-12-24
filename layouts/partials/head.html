@@ -21,38 +21,11 @@
 
 {{ partial "favicons.html" . }}
 
-{{ $style := "light-without-switcher" }}
-{{ if and (isset site.Params "style") (ne site.Params.style "") }}
-    {{ $style = site.Params.style | lower }}
-{{ end }}
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/scratch.css" />
 
-{{ if not (in (slice "light-without-switcher" "dark-without-switcher") $style) }}
-<style>
-  body {
-    visibility: hidden;
-    opacity: 0;
-  }
-</style>
-
-<noscript>
-  <style>
-    body {
-      visibility: visible;
-      opacity: 1;
-    }
-  </style>
-</noscript>
-{{end}}
-
-{{ partial "resource.html" (dict "context" . "type" "css" "filename" "css/main.css") }}
-
-{{ if .Site.Params.copyCodeButton | default true }}
-    {{ partial "resource.html" (dict "context" . "type" "js" "filename" "js/copy-code.js") }}
-{{ end }}
-
-{{ range .Site.Params.customJS -}}
-  {{ partial "resource.html" (dict "context" $ "type" "js" "filename" . ) }}
-{{- end }}
+{{ $js := resources.Get "js/copy-code.js" | resources.Fingerprint "sha512" }}
+<script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 
 {{ template "_internal/opengraph.html" . }}
 {{ template "_internal/twitter_cards.html" . }}
@@ -69,18 +42,6 @@
     {{ end }}
 {{ end }}
 
-<!-- Article tags -->
-<!-- <meta property="article:published_time" content="">
-<meta property="article:modified_time" content="">
-<meta property="article:tag" content="">
-<meta property="article:publisher" content="https://www.facebook.com/XXX"> -->
-
-{{ if and (.Site.GoogleAnalytics) (hugo.IsProduction) }}
-    {{ template "_internal/google_analytics.html" . }}
-{{ end }}
-
 {{ if (.Site.Params.UmamiAnalytics.enabled ) }}
     {{ partial "umami_analytics.html" . }}
 {{ end }}
-
-{{ partial "head-extra.html" . }}

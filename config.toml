@@ -2,7 +2,6 @@
 
 baseURL = "https://blog.sklad.observer/"
 title = "SKлад постов"
-theme = "anubis"
 
 cleanDestinationDir = true
 
@@ -43,7 +42,7 @@ style = "native"
 # startLevel = 2
 endLevel = 4
 
-# ============ ANUBIS SETTINGS ============
+# ============ THEME SETTINGS ============
 
 [params]
 # Gets included in the footer.
@@ -58,18 +57,6 @@ tocWordCount = 600
 # Show a "Read more..." button under the post preview.
 # Sadly, doesn't work for posts with `summary = "..."` set in the front matter.
 readMore = true
-
-# === CSS ===
-style = "dark-without-switcher"
-# A proper way to add sustom CSS would be to put the file into the `assets/` directory
-# and then add a leave a relative path to it here:
-# customCSS = ["css/scratch.css"]
-# But this makes Anubis include the contents of the file into the big `main.css`
-# instead of adding another `<link rel="stylesheet" ... />` to the HTMLs.
-# This might be a better approach than serving custom CSS files from `static/`
-# (considering Hugo probably won't minify static files, won't generate integrity checks, etc.),
-# but I want my CSS as a separate file, so instead I overwrite `layouts/partials/head-extra.html`.
-# https://vignette1.wikia.nocookie.net/godzilla/images/8/81/Genius-meme.png
 
 # === Social icons ===
 rssAsSocialIcon = true
