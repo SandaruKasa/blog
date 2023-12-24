@@ -1,12 +1,6 @@
 # ============ HUGO SETTINGS ============
 
-# Hugo occasionaly caluclates absolute links (even when the realtive ones would do),
-# to allow sites start not at the root of a daomain.
-# But since I have an entire subdomain, I can just set this to "/",
-# which has an additional benifit of not requiring me to change this param
-# every time I want to launch the site without https or on localhost.
-# (Commenting this line out or setting it to "" seems to have the same effect).
-baseURL = "/"
+baseURL = "https://blog.sklad.observer/"
 title = "SKлад постов"
 theme = "anubis"
 
