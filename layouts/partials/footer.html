@@ -5,7 +5,7 @@
                 © {{ if isset .Site.Params "author"}}{{ .Site.Params.author }}, {{end}}{{ now.Year }}
                 {{ $file_path := "" }}
                 {{ with .File }}
-                {{ $file_path = .File.Path }}
+                {{ $file_path = .Path }}
                 {{ end }}
                 {{ if ne $file_path "/about.md" }}
                 <br>
