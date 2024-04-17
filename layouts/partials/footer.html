@@ -2,7 +2,9 @@
     <div class="common-footer-bottom">
         <div class="copyright">
             <p>
-                © {{ if isset .Site.Params "author"}}{{ .Site.Params.author }}, {{end}}{{ now.Year }}
+                ©
+                {{ if isset .Site.Params "author"}}{{ .Site.Params.author }}, {{end}}
+                {{ if isset .Site.Params "start_year"}}{{ .Site.Params.start_year }}&ndash;{{end}}{{ now.Year }}
                 {{ $file_path := "" }}
                 {{ with .File }}
                 {{ $file_path = .Path }}

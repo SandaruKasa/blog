@@ -47,6 +47,7 @@ endLevel = 4
 [params]
 # Gets included in the footer.
 author = "サンダル 傘"
+start_year = 2023
 # This seems to mainly affect some meta tags used by Twitter previews and whatnot.
 description = "Hello, there" # TODO: change to something reasonable
 
@@ -60,7 +61,3 @@ readMore = true
 
 # === Social icons ===
 rssAsSocialIcon = true
-
-[[params.social]]
-id = "github"
-url = "https://github.com/SandaruKasa"
