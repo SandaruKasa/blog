@@ -5,6 +5,18 @@
 {{ $machineDateFormat := "2006-01-02" }}
 
 <div class="post-info">
+    {{ $wc := not (and (isset $.Site.Params "wc") ($.Site.Params.wc)) }}
+
+    {{ if isset .Params "wc" }}
+    {{ $toc = .Params.wc }}
+    {{ end }}
+
+    {{ if $wc }}
+    <div class="post-word-count">
+        {{ .WordCount }} words, ~{{ .ReadingTime }} min.
+    </div>
+    {{ end }}
+
     {{ if .Params.date }}
         <div class="post-date dt-published">
             <a class="u-url" href="{{ .RelPermalink }}"><time datetime="{{ .Params.date.Format $machineDateFormat }}">
