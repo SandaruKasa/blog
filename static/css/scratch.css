@@ -99,6 +99,10 @@ a>code {
     color: var(--link-color);
 }
 
+h1>a>code {
+    color: inherit;
+}
+
 a:hover>code,
 a:active>code,
 a:focus>code {
