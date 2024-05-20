@@ -6,6 +6,7 @@ some parts of Rust feel a bit... rusty
 (as in "shabby", not as in "unique to the Rust programming language")
 """
 tags = ["Rust", "complaints"]
+series = ["rust-defects"]
 
 draft = true
 +++
@@ -507,5 +508,11 @@ but I'm not going to dive into this here, because, thankfully, I never had to de
 ### [What Linux wants](https://github.com/Rust-for-Linux/linux/labels/meta)
 ### async trait methods
 ### Unbound generic parameters on structs, implied bounds, specialization
+### [?Sized](https://smallcultfollowing.com/babysteps/blog/2024/04/23/dynsized-unsized/)
+### [Unwind considered harmful?](https://smallcultfollowing.com/babysteps/blog/2024/05/02/unwind-considered-harmful/)
+### Preludes
+### Namespaces extensions
+### as casts
+### enum structs
 
 <!--  TODO: conclusion, tool way longer than anticipated, actually a reason for creating the blog in the first place -->
