@@ -17,6 +17,23 @@
     </div>
     {{ end }}
 
+    {{ $page := . }}
+    {{ range $series_name := .Params.series }}
+        {{ $posts := collections.Reverse ($.Site.Taxonomies.series.Get $series_name) }}
+        Part
+        {{ range $pos := seq (len $posts) }}
+            {{ if (eq $page (index $posts (sub $pos 1)).Page)}}
+                {{ $pos }}
+            {{ end }}
+        {{ end }}
+        of
+        {{ len $posts }}
+        in
+        {{ $series := $.Site.GetPage (printf "/series/%s" $series_name | urlize ) }}
+        "<a href="{{ $series.Permalink }}">{{ $series.Title | default $series_name }}</a>"
+        series
+    {{ end }}
+
     {{ if .Params.date }}
         <div class="post-date dt-published">
             <a class="u-url" href="{{ .RelPermalink }}"><time datetime="{{ .Params.date.Format $machineDateFormat }}">

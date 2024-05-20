@@ -497,40 +497,16 @@ article header h1 a {
     white-space: nowrap;
 }
 
-.post-categories {
-    display: inline;
-    list-style-type: none;
-    padding: 0;
-}
-
-.post-categories li {
-    display: inline;
-    margin-right: 1em;
-}
-
-.post-tags {
-    display: inline;
-    list-style-type: none;
+.post-taxonomies ul {
     padding: 0;
     margin: 0;
 }
 
-.post-tags li {
+.post-taxonomies li {
     display: inline;
     margin-right: 1em;
 }
 
-.post-authors {
-    display: inline;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.post-authors li {
-    display: inline;
-    margin-right: 1em;
-}
 
 article img {
     max-width: 100%;

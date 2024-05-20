@@ -42,6 +42,10 @@ style = "native"
 # startLevel = 2
 endLevel = 4
 
+[taxonomies]
+series = 'series'
+tag = 'tags'
+
 # ============ THEME SETTINGS ============
 
 [params]
