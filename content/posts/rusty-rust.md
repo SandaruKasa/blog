@@ -514,5 +514,7 @@ but I'm not going to dive into this here, because, thankfully, I never had to de
 ### Namespaces extensions
 ### as casts
 ### enum structs
+### Orphan rule
+### Pointer arithmetic is not unsafe, lol
 
 <!--  TODO: conclusion, tool way longer than anticipated, actually a reason for creating the blog in the first place -->
