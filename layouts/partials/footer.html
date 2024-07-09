@@ -3,8 +3,12 @@
         <div class="copyright">
             <p>
                 ©
+                {{ if isset .Params "author" }}
+                {{ .Params.author }}, {{ .Params.date.Year }}
+                {{ else }}
                 {{ if isset .Site.Params "author"}}{{ .Site.Params.author }}, {{end}}
                 {{ if isset .Site.Params "start_year"}}{{ .Site.Params.start_year }}&ndash;{{end}}{{ now.Year }}
+                {{ end }}
                 {{ $file_path := "" }}
                 {{ with .File }}
                 {{ $file_path = .Path }}
