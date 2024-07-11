@@ -4,16 +4,19 @@ slug = "particle-tango"
 summary = "Statistical ensembles, Monte-Carlo simulation and Metropolis-Hastongs algorithm, all combined in a seemingly trivial physics problem."
 tags = ["math", "chemistry", "physics"]
 author = "OneLightYearIsNotAYear"
-date = "2024-07-10"
+date = "2024-07-11"
 math = true
 +++
 
 ## The task at hands
-Suppose you have the following task: there are two particles on a, say,
-$5 \times 5$ square lattice, and they can interact in three ways:
+Suppose you have the following task:
+there are two particles on a $L \times L$ square lattice,
+they can interact in three ways (particles are located in the vertices of the lattice):
 - if the distance is $1$ (particles on the edge of a square), the energy of the interaction is $-5$ (in arbitrary energy units)
 - if the distance is $\sqrt{2}$, the energy of interaction is $-3.5$
 - otherwise, the interaction energy is zero
+
+![A picture with a clarifying example: a square lattice with 3 pairs of particles, each pair in of the 3 possible states](lattice.png)
 
 What are the properties of such a system?
 How would you evaluate the average energy of the system, average the distance between particles?
