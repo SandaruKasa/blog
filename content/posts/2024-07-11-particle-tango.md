@@ -1,7 +1,7 @@
 +++
 title = "Particle Tango"
 slug = "particle-tango"
-summary = "Statistical ensembles, Monte-Carlo simulation and Metropolis-Hastongs algorithm, all combined in a seemingly trivial physics problem."
+summary = "Statistical ensembles, Monte-Carlo simulation and Metropolis-Hastings algorithm, all combined in a seemingly trivial physics problem."
 tags = ["math", "chemistry", "physics"]
 author = "OneLightYearIsNotAYear"
 date = "2024-07-11"
