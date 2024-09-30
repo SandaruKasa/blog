@@ -32,6 +32,9 @@ disableJS = true
 # disableSVG = true
 disableXML = true
 
+[markup.goldmark.renderer]
+unsafe = true
+
 [markup.highlight]
 style = "native"
 

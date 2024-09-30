@@ -170,3 +170,13 @@ h6 {
     margin-block: 1em;
     font-size: 1em;
 }
+
+.spoiler {
+    background-color: var(--dark-green);
+    color: transparent;
+}
+
+.spoiler:hover {
+    background-color: inherit;
+    color: inherit;
+}
