@@ -1,11 +1,11 @@
 +++
 title = "Purely Functional Complaints"
-slug = "purely-functional-complaints"
 summary = "Some of my pain points when dealing with Haskell"
 tags = ["Haskell", "complaints"]
 
 date = "2023-12-20"
 lastMod = "2023-12-22"
+aliases = ["/posts/purely-functional-complaints"]
 +++
 
 Fun(?) fact: this website was created because I wanted to write a giant post
