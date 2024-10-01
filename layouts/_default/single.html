@@ -15,6 +15,11 @@
                 {{ partial "post-language-switcher.html" . }}
             </header>
         </div>
+        {{ if not .Site.Params.disableSummary }}
+            <div class="content post-summary p-summary">
+                {{ .Summary | safeHTML }}
+            </div>
+        {{ end }}
         {{ partial "post-info.html" . }}
         {{ partial "toc.html" .}}
         <div class="content e-content">
