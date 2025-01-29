@@ -79,7 +79,7 @@ for a range of temperatures of $0--4$ with the step $T = 0.2$ and see where it t
 So if we look at what could happen during the melting process,
 we would see a sudden shift in density (see example with the water below).
 This is what happens when we have a first-order phase transition.
-Or, it is rather a definition of one---in the Ehrenfest classification.
+Or, it is rather a definition of one --- in the Ehrenfest classification.
 
 ![Graph captioned "Density of water (and ice) as a function of temperature. Note
 maximum density of water at 4%C [sic]. (Data from Pauling 1953
@@ -171,7 +171,7 @@ So we'll leave it at that and maybe I will update this post with new cool graphs
 
 ## Final notes
 
-This simple task, which hadn't left my mind for nearly two year,
+This simple task, which hadn't left my mind for nearly two years,
 proved to be a fun coding and learning experience.
 It's amazing that we can see 'crystals' forming
 and even something that resembles the actual melting process.
