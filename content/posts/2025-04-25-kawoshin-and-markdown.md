@@ -3,7 +3,7 @@ title = "Neon Genesis Homestuck: Goodbye Despair"
 summary = "Observing cinematic parallels and complaining about Markdown"
 tags = []
 
-draft = true
+date = "2025-04-25"
 +++
 
 ## Curiously recurring anime pattern
@@ -13,6 +13,15 @@ Spoilers for "Neon Genesis Evangelion" (1995--1996),
 "Danganronpa 2: Goodbye Despair" (2012),
 and Homestuck (2009--2016).
 
+Spent quite some time thinking how to present
+what essentially is 3 slightly different versions of the same text
+in a way that would allow to easily compare the versions
+and see similarities between them.
+Thought about maybe doing an interactive switch to cycle through the 3 versions
+with their common parts highlighted in the same color,
+but that sounded like too much pain to implement and fit into the unconventional
+color palette of this blog, while not giving a very good overview for the reader.
+Decided on a table instead.
 
 <table style="width: 100%; table-layout: fixed">
 <tr><td colspan="3">
@@ -30,19 +39,9 @@ there were these two guys, named
 </td></tr>
 
 <tr>
-<td>Shinji Ikari</td>
-<td>Jake English</td>
-<td>Hajime Hinata</td>
-</tr>
-
-<tr><td colspan="3">
-&
-</td></tr>
-
-<tr>
-<td>Kaworu Nagisa.</td>
-<td>Dirk Strider.</td>
-<td>Nagito Komaeda.</td>
+<td>Shinji Ikari <br/> & Kaworu Nagisa.</td>
+<td>Jake English <br/> & Dirk Strider.</td>
+<td>Hajime Hinata <br/> & Nagito Komaeda.</td>
 </tr>
 
 <tr><td colspan="3">
@@ -107,7 +106,7 @@ and the author confirmed he named him after some IRL friends.
 <td colspan="2">
 In the anime's system of classifying each major character
 to some sort of a "class", giving them a title related to their abilities/powers
-and personality, he has a title of
+and personality, his title is
 </td>
 </tr>
 
@@ -118,7 +117,7 @@ and personality, he has a title of
 
 <tr>
 <td colspan="2">
-and a special form powered by said Hope,
+and he has a special form powered by said Hope,
 where everything around him glows with bright white color.
 
 It is also OP AF, but takes quite a lot of time to master or even discover.
