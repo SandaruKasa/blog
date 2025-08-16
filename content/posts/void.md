@@ -11,21 +11,20 @@ math = true
 
 If you're familiar with "sum" and "product" types, feel free to skip [to the next section](#void)
 (unless you want to hear me complain about how Kotlin, Java, C, C++ and everyone else
-gets everything wrong in their design).
-If not, then I'm sorry your programming language doesn't let you have nice things.
-But read on and I'll try to explain this to you!
+gets thing wrong in their design).
+If you're not familiar with those, I'm sorry your programming language doesn't let you have nice things...
 
 ### `sizeof(T)` & $|T|$
 
-Every type represents a piece of data, some value, constrained to
-one of all the possible values for this type.
+Every type represents a piece of data, some bit pattern,
+constrained to one of all the possible values for this type.
 For `bool` it's 2 values: `true` or `false`.
 For a `uint8_t` there's 256 of them: integers from `0` to `255`.
 
 Essentially, you can think of a type as of a set of all its possible values.
 
 For a type `T`, let's denote the number of all its possible values as $|T|$.
-Yes, this just cardinality of a set.
+Yes, just the cardinality of a set.
 
 Observe that we need at least $\log_2 |T|$ bits to store a value of type $T$.[^length]
 Indeed, $\log_2 2 = 1$ bit is enough to store a `bool` with its two possible values,
@@ -43,15 +42,22 @@ this would be the case with something like `enum Color { Red, Green, Blue };`---
 it has 3 values, and $1 < \log_2 3 <2$, so you can't really cram it into 1 bit,
 but you can in 2, and you probably will just waste 8 bits on it in the end anyway[^non-whole].
 
-[^length]: The pedantic among you may point out that my reasoning does not hold for infinite types.
+[^length]: That is if we want this number of bits to be sufficient for *any* value
+	of the given type. That is, if we are using a fixed length encoding.
 
-	And yes, you are right.
-	You do not need $\log_2 \infty = \infty$ bits to store an arbitrarily big integer,
-	because you can just throw away the infinitely many leading zeros,
-	and use what effectively is a variable-length encoding.
-	And the type does not even have to be infinite!
+	But in theory nothing stops you from representing, say, an arbitrary integer as a
+	one followed with the corresponding number of zeroes.
+	Than smaller integers will require less space to store than the bigger ones.
+
+	And in fact, variable length encoding is the only way there is to store infinitely
+	large types in a finite amount of RAM that we have.
+	Because with fixed length encoding you would need $\log_2 \infty = \infty$ bits
+	to store an arbitrarily big integer.
+
+	But the type does not even have to be infinite for variable length encoding to be useful.
 	See, for example,
-	[how UTF-8 stores its $1 112 064$ possible Unicode codepoints](https://en.wikipedia.org/wiki/UTF-8#Description).
+	[how UTF-8 stores its $1 112 064$ possible Unicode codepoints](https://en.wikipedia.org/wiki/UTF-8#Description)
+	or what [Huffman coding](https://en.wikipedia.org/wiki/Huffman_coding) is.
 
 	A more accurate way to phrase what I'm trying to say here is that
 	an injection$f: T \to \left\\{ 0,1 \right\\}^N$ can exist only if $N\ge\log_2|T|$.
@@ -60,17 +66,19 @@ but you can in 2, and you probably will just waste 8 bits on it in the end anywa
 	are actually used in practice, because computer memory is fundamentally
 	finite in capacity. And even then, for any type, whose size is limited not by some
 	small constant known in advance, but rather by the amount of allocatable memory
-	or by the size of input data,	an indirection would be used anyways,
-	so as far as the type layouts go,	you just get a $\le 64$ bit pointer, and that's it.
-	Most of the time the burden of dealing with variably-sized data is shifted
-	from a programming language's type system to the runtime memory allocator.
+	or by the size of input data,	your programming language of choice
+	would likely use an inderection in form of a heap allocation
+	of a runtime-determined size and a fixed-size (likely 64 bit) pointer to it.
+	So as far as the type layouts go,	you just get a $\le 64$ bit pointer
+	and maybe a	few auxiliary fields like length/capacity, and that's it.
+	The size is thus fixed and known in advance.
 
 [^non-whole]: It is actually possible to exploit the fact that $\log_2 3 < 2$.
 
 	For a `Color[3]` array there is only 27 possible combinations of values,
 	which can be stored in $\lceil \log_2 27 \rceil = 5$ bits,
-	which is less than `2*3=6` bits needed fot the two-bits-per-element encoding.
-	But it is also presumably less pleasant to del with.
+	which is less than `2*3=6` bits needed for the two-bits-per-element encoding.
+	But it is also presumably less pleasant to deal with.
 
 Now, to the "sum" & "product" types.
 
@@ -86,20 +94,16 @@ struct two_octets {
 };
 ```
 
-Why is a *product* type?
+Why is this a *product* type?
 Because the number of its possible values is the *product* of the number of possible values of its fields.
 
 $$|\texttt{two_octets}| = |\texttt{typeof(a)}|\cdot|\texttt{typeof(b)}|=|\texttt{uint8_t}|^2=256^2$$
 
-Or you can take logarithm of both sides of this equation and get a more familiar
+Or you can take a logarithm of both sides of this equation and get a more familiar
 ```c
 sizeof(two_octets) = sizeof(a) + sizeof(b) = sizeof(uint8_t) * 2
 ```
 because logarithms turn multiplication into addition and exponentiation into multiplication.
-
-So even though you can just add up the sizes of the fields,
-in actuality you are multiplying cardinalities.
-The addition of sizes is just a nice consequence of logarithm properties.
 
 Some languages also provide a convenient way to create product types
 without having to come up with a name for every single one of them,
@@ -113,9 +117,9 @@ But not C, C++, Java, or Kotlin. In C & Java they are absent completely.
 C++ & Kotlin try to mitigate the lack of a language feature
 by providing some types in the standard library
 (namely, `Pair` & `Triple` for Kotlin, `std::pair<T, U>` & `std::tuple<T...>` for C++),
-but ergonomics of those is admittedly underwhelming.
+but ergonomics of those are admittedly underwhelming.
 This is pretty much a status quo for C++: never add builtin types (or type constructors),
-always twist and rape the shit out of template metaprogramming in std to try
+always twist and rape the shit out of template metaprogramming in `std` to try
 and poorly mimic those language features. (We will see this approach again very soon.)
 The fact that they are actually able to do that speaks volumes of C++'s
 flexibility and expressivity, but just as much about its stagnation.
@@ -255,7 +259,7 @@ from Wiktionaty.
 ### Void is Nothing
 
 In C/C++ and Java the `void` type is not actually an empty type.
-I.e. the set of it's possible values is not empty,
+I.e. the set of its possible values is not empty,
 it actually contains a single element,
 which, unsurprisingly, means that you need $\log_2 1 = 0$ bit to store it.
 
@@ -377,7 +381,7 @@ Java also special-cases `void` when it comes to `return` syntax,
 but there's yet another can of worms to unpack here: Java's generics.
 
 You see, in Java there are two kinds of types: primitives and Objects.
-There are just a handful of primitive types. Namely
+There is just a handful of primitive types. Namely
 
 - `int`, `short`, `long` --- need no introduction.
 - `boolean` --- also pretty clear.
