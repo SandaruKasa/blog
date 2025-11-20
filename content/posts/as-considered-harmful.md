@@ -207,6 +207,8 @@ In fact, some of them are already in place or will be there soon.
 Let's actually go over the use cases for `as` and see where there is
 an alternative API already available or going through the stabilization process.
 
+
+<!-- TODO: precedence & .await -->
 ### State of affairs
 
 <!-- TODO -->

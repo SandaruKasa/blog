@@ -4,6 +4,7 @@ summary = "Observing cinematic parallels and complaining about Markdown"
 tags = []
 
 date = "2025-04-25"
+lastMod = "2025-11-20"
 +++
 
 ## Curiously recurring anime pattern
@@ -287,6 +288,21 @@ hope has something to do with bright light,
 people with white hair have red pupils of their eyes,
 and the main character is oblivious to the romantic attention he gets.
 
+Update(2025-11-20): And indeed there's more!
+"The Summer Hikaru Died" (spoilers ahead) is an anime (and manga) about two guys,
+Yoshiki Tsujinaka & Hikaru Indo. The first one has relatively short black hair
+with overgrown bangs, the second one has messy pointy completely white hair.
+In his "demon" form, the second guy has red pupils.
+Strangely, there's no skin tone difference.
+And the first guy isn't associated with the concept of hope.
+But at least the second guy's name uses the same kanji as "light"
+(as in rays of light, not the opposite of heavy).
+Anyways, these two are gay. So gay in fact, that there are no girl sidekicks involved.
+The second guy does get decapitated at some point,
+but he's kinda already dead or something and later he also gets resurrected or whatever.
+IDC honestly. The only thing I can say for sure is,
+"Thank god for not making me a gay guy in rural Japan near a haunted mountain."
+
 ---
 
 Now to a completely different topic.
@@ -423,3 +439,23 @@ started with the word "Trump."
 ---
 
 Well, that's about it. See ya.
+
+Update(2025-11-20): okay, yeah, Trump is probably shit even by the "US politician" standards,
+but it still does not justify seething over the fact that some billionaire assholes
+used the word "president" to refer to the guy who at that point had already been a president
+for one term, won the recent election and was just over a month away from taking the office again.
+If anything, it only makes things worse. If he was just an average politian, sure,
+go ahead and have you hysteric meltdown over whatever unremarkable things he's doing.
+But if he's actually quite bad, then throwing tantrums over technically inaccurate wording
+in tweets ("Xs"?) is not only counterproductive but actually hurtful,
+as it only reinforces the stereotype of an insane *DEI LBGTQIA+ democrat woke SJW leftist*
+and actively undermines the perceived significance of what the vocal critics of Trump are saying,
+even on topics that *actually*[^actually] matter, such as, I dunno, his crypto schemes,
+his presidential pardons, oppression of the media,
+that whole thing with Einstein's island (or whatsisname),
+cuts to the federal spending, his peacemaking efforts,
+or even (forgive me for saying the dreaded word)
+[THE ECONOMY](https://static.wikia.nocookie.net/mspaintadventures/images/5/57/EcononyBarack.png/revision/latest?cb=20191105004318).
+
+[^actually]: 3rd[^3rd] "actually" in a row, yay!
+[^3rd]: How do I make the "rd" be in fancy superscript using Markdown?
