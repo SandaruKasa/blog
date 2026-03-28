@@ -360,20 +360,54 @@ But you can return it from a function! How cool is that! We even have a special 
 `return;`
 
 In practice this means that `void` is special-cased like hell syntactically.
-This is why you can often encounter horrors like this in C++ libraries (even in std):
+This is why you can often encounter horrors like this in C++ libraries:
 ```c++
 template <typename R>
-R visit(Function<T, R> callback) {
+R visit(Function<R, T> callback) {
     T my_t = ...;
     if constexpr (std::is_same_v<R, void>) {
         callback(my_t);
-        return;
+        something_else();
     } else {
-        return callback(my_t);
+        R result = callback(my_t);
+        something_else();
+        return result;
     }
 }
 ```
+(even `std` has to specialize `std::expected` around void)
+or why things like [`folly::Unit` need to be created](https://github.com/facebook/folly/blob/0c3679b76b55fc92b5596429154bf4637d591ff0/folly/Unit.h#L36).
 How cool.
+
+But it wouldn't be C++ if it only had a single unit type. Of course it has more!
+
+- `std::monostate` (C++17): ["Unit type intended for use as a well-behaved empty alternative in
+	`std::variant`"]((https://en.cppreference.com/w/cpp/utility/variant/monostate)).
+	The closest thing that standard has to a proper unit type.
+	It is literally just a `struct monostate { };` with a few comparison operators and an `std::hash`
+	specialization slapped on top.
+- `std::in_place_t`, `std::in_place_type_t`, `std::in_place_index_t`: C++17 tags for `std::variant`.
+	Also their C++23 cousins: `std::unexpect_t` for `std::expect` and `std::from_range_t` for ranges.
+	These are [used to disambiguate constructors](https://en.cppreference.com/w/cpp/utility/in_place.html).
+	Speaking of types used for disambiguation,
+- `nullptr_t` (C++11): defined as literally `decltype(nullptr)`.
+	`nullptr` being a keyword denoting a magical (pr)value of a magical built-in type.
+	It has a property of being implicitly convertable to null pointers of type `T*`
+	for any `T` imaginable.
+	This thing is mostly useful fot disambiguating `foo(nullptr)` calls when `foo` has overloads
+	for a few different pointer types.
+- `std::tuple<>` (C++11): empty product type. Nuff said.
+- `std::input_iterator_tag`, `std::output_iterator_tag`, `std::forward_iterator_tag`,
+	`std::bidirectional_iterator_tag`, `std::random_access_iterator_tag`,
+	`std::contiguous_iterator_tag` (C++20):
+	[iterator tags](https://en.cppreference.com/w/cpp/iterator/iterator_tags.html).
+- `std::sorted_equivalent_t`, `std::sorted_unique_t` (C++23):
+	[tags](https://en.cppreference.com/w/cpp/container/sorted_equivalent.html).
+	[again](https://en.cppreference.com/w/cpp/container/sorted_unique.html).
+- Things like [`std::ignore_t`](https://en.cppreference.com/w/cpp/utility/tuple/ignore), and
+	[`std::nullopt_t`](https://en.cppreference.com/w/cpp/utility/optional/nullopt.html) are not
+	really specified by the standard to be unit structs, but likely are in your ~favorite~
+	least-hated `std` implementation.
 
 #### Java
 
@@ -446,25 +480,26 @@ They also have implicit conversion to and from their primitive counterparts.[^pe
 	proper module support in C++ compilers and GTA VI.
 	Maybe even a Half-Life 3 on top, if the recent rumors are anything to go by.
 
-Surprisingly, there is `java.lang.Void`.
-But you cannot create it.
-You cannot return it from functions.
-You cannot use it in templates, so no `Function<T, Void>` for you,
-use a manually monomorphized `Consumer<T>` instead.
-Why not be consistent here and have `java.lang.Void` be a singleton
-with only one value, exposed as its static field? No idea.
+Surprisingly, there is `java.lang.Void`, but you cannot create it.
+Fear not, though! `Void` is an object after all,
+so you can always just shove a `null`, where `Void` is expected[^Consumer].
 
-This is actually a significant difference.
-While `void` in Java is by all accounts a unit type,
+[^Consumer]: Similarly to things like `LongFunction`,
+	there also are things like `Consumer<T>` and `Producer<T>`,
+	which could technically be replaced with `Function<Void, T>` and `Function<T, Void>`.
+	Although I'm not sure these ones were created out of performance concerns.
+
+In practice, this makes `java.lang.Void` similar to C++'s `std::nullptr_t` unit type,
+but this is technically more of a by-product of Java's pervasive nullability,
+so while `void` in Java is by all accounts a unit type,
 just with a lot of syntactic special-casing,
-`java.lang.Void` is fundamentally different.
+`java.lang.Void` is somewhat different.
 It is not creatable. It has no possible values.
 It is not a unit type. It's a "never" type.
 
 ### Void is Never
 
 ## TODO
-- monostate
 - mutex poisoning
 - poison has ! for aborting panics
 - panic handler returns !
@@ -477,3 +512,4 @@ It is not a unit type. It's a "never" type.
 - you can get anything from Never. As empty match and as recursion.
 - Make fun of C++ trying to deliver lang features as std components.
 - Never does not exist in C/C++. But it has [[no_return]]. Similarly ! is stable in rust only for fn()->!.
+- `std::variant<>`.
