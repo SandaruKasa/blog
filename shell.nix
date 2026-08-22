@@ -2,8 +2,9 @@
   pkgs ? import <nixpkgs> { },
 }:
 pkgs.mkShellNoCC {
+  __structuredAttrs = true;
+  strictDeps = true;
   preferLocalBuild = true;
-  allowSubstitutes = false;
 
   name = "blog";
   packages = with pkgs; [
