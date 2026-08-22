@@ -5,6 +5,7 @@ tags = ["complaints"]
 toc = false
 
 date = "2024-10-01"
+lastMod = "2026-08-23"
 +++
 
 Time is a mess.
@@ -80,6 +81,19 @@ Anyways, DST!
 		From 2018 onwards, they switched to "permanent" DST,
 		but they still go back to standard time for Ramadan.
 		An 11 month long DST is definitely peculiar.
+
+		Update from 2026: starting this autumn, Morocco plans to switch to permanent standard time,
+		which would also eliminate the need to adjust the clock for the duration of Ramadan.
+		(So in a sense 2018--2026 Morocco is a 2011--2014 Russia, but with more steps.)
+		While on a conceptual level it's sad that 11 month long DST is not a thing anymore,
+		on a practical level, good for them. They made a right choice.
+		*The* right choice. Which is 0 clock adjustments a year.
+		Well, aside from leap seconds I guess, but that's a whole nother story,
+		way more technically complicated, and if you care about seconds on the scale of years,
+		you might as well start taking relativistic effects into account.
+		Here's some bonus reading about that:
+		- <https://geometrian.com/resources/timestds/>
+		- <http://www.madore.org/~david/computers/unix-leap-seconds.html>
 [^citation]: Citation needed.
 	Hopefully this random *Nature* article (I haven't read too deep into) will do:
 	https://www.nature.com/articles/s41467-022-34704-9
@@ -106,7 +120,7 @@ As you could have guessed, I'm a huge proponent of <span class="spoiler">abolish
 but even I call bullshit on that "Think of the cows, man" argument against DST.
 
 > "And that's not to mention the unhappy cows and other animals that don't understand the clocks changing and don't understand why the milkmaids come to them at a different time."
-> 
+>
 > https://www.theguardian.com/world/2011/mar/25/clocks-go-forward-last-time-russia
 
 **Well, maybe shift your milking schedule then
